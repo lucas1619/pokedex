@@ -20,8 +20,9 @@ export class PokemonAdapter {
         return pokemon;
     }
 
-    public static axiosToPokemons(axiosPokemons : any[]) : Pokemon[] {
-        return axiosPokemons.map((axiosPokemon : any, index : number) => {
+    public static axiosToPokemons(axiosPokemons : any) : Pokemon[] {
+        debugger
+        return axiosPokemons.data.results.map((axiosPokemon : any, index : number) => {
             return {
                 name: axiosPokemon.name,
                 number: index + 1,

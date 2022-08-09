@@ -14,10 +14,9 @@ const Main = () => {
   const getPokemons = async () => {
     const pokemonApi = PokemonApi.Instance
     try {
-      const { status, data } = await pokemonApi.getPokemons(151)
-      if(status === 200) {
-        const { results } = data
-        const pokemons = PokemonAdapter.axiosToPokemons(results)
+      const response = await pokemonApi.getPokemons(151)
+      if(response.status === 200) {
+        const pokemons = PokemonAdapter.axiosToPokemons(response)
         setPokemons(pokemons)
         setFilteredPokemons(pokemons)
       }

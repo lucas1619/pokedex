@@ -8,7 +8,15 @@ export class PokemonApi extends Api {
     super('https://pokeapi.co/api/v2');
   }
   
-  public getPokemon(id: number) : Promise<any> {
+  public getPokemon(id: number | string | undefined) : Promise<any> {
+    if(typeof id === 'string') {
+      id = parseInt(id);
+    }
+    
+    if(typeof id === 'undefined') {
+      return Promise.reject('No id provided');
+    }
+
     return this.get(`/pokemon/${id}`);
   }
 
