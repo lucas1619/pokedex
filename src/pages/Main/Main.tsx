@@ -18,6 +18,7 @@ const Main = () => {
       if(status === 200) {
         const { results } = data
         setPokemons(PokemonAdapter.axiosToPokemons(results))
+        setFilteredPokemons(pokemons)
       }
 
     } catch (error) {
@@ -36,7 +37,6 @@ const Main = () => {
 
   useEffect(() => {
     getPokemons()
-    setFilteredPokemons(pokemons)
   }, [])
 
   return (
