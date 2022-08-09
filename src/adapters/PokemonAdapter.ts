@@ -22,10 +22,14 @@ export class PokemonAdapter {
 
     public static axiosToPokemons(axiosPokemons : any[]) : Pokemon[] {
         return axiosPokemons.map((axiosPokemon : any, index : number) => {
-            if(axiosPokemon.data.id === undefined) {
-                axiosPokemon.data.id = index + 1;
+            return {
+                name: axiosPokemon.name,
+                number: index + 1,
+                image: "",
+                height: undefined,
+                types: undefined,
+                baseStats: undefined
             }
-            return this.axiosToPokemon(axiosPokemon)
         });
     }
 }

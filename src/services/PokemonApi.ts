@@ -1,11 +1,11 @@
 import Api from "./Api";
 
-class PokemonApi extends Api {
+export class PokemonApi extends Api {
 
   private static _instance: PokemonApi
 
   constructor() {
-    super('https://pokeapi.co/api/v2/');
+    super('https://pokeapi.co/api/v2');
   }
   
   public getPokemon(id: number) : Promise<any> {
@@ -21,5 +21,3 @@ class PokemonApi extends Api {
     return this._instance || (this._instance = new this());
   }
 }
-
-export default PokemonApi;

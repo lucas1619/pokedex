@@ -1,0 +1,12 @@
+.pokemonCard {
+    @apply max-w-md bg-white rounded-lg border shadow-md p-4 flex justify-center items-center flex-col;
+}
+.imageEmpty{
+    @apply flex justify-center items-center bg-gray-300 rounded;
+    width: 100px;
+    height: 100px;
+}
+
+.imageEmpty svg{
+    @apply w-12 h-12 text-gray-200;
+}

@@ -4,8 +4,7 @@ import {
     Route, 
 } from "react-router-dom";
 
-import Main from '@pages/Main';
-import Detail from '@pages/Detail';
+import { Main, Detail } from '@/pages';
 
 import '@/styles/app.css';
 
