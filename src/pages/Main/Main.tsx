@@ -17,7 +17,8 @@ const Main = () => {
       const { status, data } = await pokemonApi.getPokemons(151)
       if(status === 200) {
         const { results } = data
-        setPokemons(PokemonAdapter.axiosToPokemons(results))
+        const pokemons = PokemonAdapter.axiosToPokemons(results)
+        setPokemons(pokemons)
         setFilteredPokemons(pokemons)
       }
 
