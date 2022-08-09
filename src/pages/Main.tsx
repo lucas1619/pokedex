@@ -32,7 +32,6 @@ const Main = () => {
       {pokemons.map((pokemon : Pokemon, index : number) => (
           <PokemonCard
             key={`${pokemon.name}-${index+1}`}
-            image={pokemon.image}
             name={pokemon.name}
             number={pokemon.number}
           />

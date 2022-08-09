@@ -1,5 +1,6 @@
 .pokemonCard {
     @apply max-w-md bg-white rounded-lg border shadow-md p-4 flex justify-center items-center flex-col;
+    transition: all .2s ease-in-out;
 }
 .imageEmpty{
     @apply flex justify-center items-center bg-gray-300 rounded;
@@ -9,4 +10,12 @@
 
 .imageEmpty svg{
     @apply w-12 h-12 text-gray-200;
+}
+
+.pokemonCard:hover {
+    transform: scale(1.15);
+}
+
+.buttonPlus {
+    @apply w-6 h-6 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm text-center;
 }
