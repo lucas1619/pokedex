@@ -2,6 +2,11 @@
     @apply max-w-md bg-white rounded-lg border shadow-md p-4 flex justify-center items-center flex-col relative;
     transition: all .2s ease-in-out;
 }
+
+.imageCard {
+    -webkit-filter: drop-shadow(5px 5px 5px rgba(255, 255, 255, 0.826));
+    filter: drop-shadow(5px 5px 5px rgba(255, 255, 255, 0.826));
+}
 .imageEmpty{
     @apply flex justify-center items-center bg-gray-300 rounded;
     width: 100px;

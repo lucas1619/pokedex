@@ -2,7 +2,7 @@ import { BaseStats } from "./BaseStats";
 
 
 export interface Pokemon {
-    image: string | null | undefined;
+    image: string | undefined;
     name: string;
     number: number;
     height: number | null | undefined;
