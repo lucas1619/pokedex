@@ -3,7 +3,6 @@ import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePalette } from 'react-palette'
-import { type } from 'os';
 
 interface Props {
     name : string;
