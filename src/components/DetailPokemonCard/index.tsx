@@ -40,7 +40,7 @@ const DetailPokemonCard = ({
 
     useEffect(() => {
         setSelected(isSelected());
-    } , [selectedPokemons]);
+    } , [selectedPokemons, pokemon]);
 
     return (
         <div className="flex items-center content-center text-white rounded-2xl p-6"
