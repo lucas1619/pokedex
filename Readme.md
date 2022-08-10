@@ -18,6 +18,7 @@
    - Axios
    - Tailwind
    - Redux
+   - Vibrant
 ## Enlaces
 - [Vercel](https://pokedex-lucas1619.vercel.app/)
 - [Repositorio en GitHub](https://github.com/lucas1619/pokedex)
