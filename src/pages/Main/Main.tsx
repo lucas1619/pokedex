@@ -69,6 +69,7 @@ const Main = () => {
               number={pokemon.number}
               name={pokemon.name}
               originalImage={pokemon.image}
+              originalBackground={pokemon.backgroundColor}
             />
           </Link>
         ))}

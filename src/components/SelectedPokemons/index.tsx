@@ -20,6 +20,7 @@ const SelectedPokemons = () => {
                             name={pokemon.name}
                             number={pokemon.number}
                             originalImage={pokemon.image}
+                            originalBackground={pokemon.backgroundColor}
                         />
                     </Link>
                 ))}

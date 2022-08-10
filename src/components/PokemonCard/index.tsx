@@ -2,22 +2,24 @@ import './styles/index.css';
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { usePalette } from 'react-palette'
+import Vibrant from 'node-vibrant';
+import { Vec3 } from 'node-vibrant/lib/color';
 
 interface Props {
     name : string;
     number : number;
     originalImage : string | null | undefined;
+    originalBackground: any
 }
 
 const PokemonCard = ({
     name,
     number,
-    originalImage
+    originalImage,
+    originalBackground
 } : Props) => {
     const [image, setImage] = useState<string | undefined | null>(originalImage);
-
-    const { data } = usePalette(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`)
+    const [backgroundCol, setBackground] = useState<Vec3 | undefined>(originalBackground);
 
     const dispatch = useDispatch();
     const selectedPokemons = useSelector((state: any) => state.pokemon.selectedPokemons);
@@ -40,7 +42,8 @@ const PokemonCard = ({
             dispatch({type: "ADD_TO_SELECTED_POKEMONS", payload:{
                 name: name,
                 number: number,
-                image: image
+                image: image,
+                backgroundColor: backgroundCol
             }})
         }
         else if(image && selected){
@@ -51,15 +54,25 @@ const PokemonCard = ({
         setSelected(!selected)
     }
 
+    const ifNotViewed = async () => {
+        const urlImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png` 
+        setImage(urlImage)
+        dispatch({ type: "SET_POKEMON_IMAGE", payload: { 
+            index: number - 1,
+            image: urlImage
+        }})
+        const pallete = await Vibrant.from(urlImage).getPalette()
+        const rgb = pallete.Vibrant?.getRgb()
+        dispatch({ type: "SET_POKEMON_BACKGROUND_COLOR", payload: { 
+            index: number - 1,
+            backgroundColor: rgb
+        }})
+        setBackground(rgb)
+    }
+
     useEffect(() => {
         if (inView && !image) {
-            setTimeout(() => {
-                setImage(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`)
-                dispatch({ type: "SET_POKEMON_IMAGE", payload: { 
-                    index: number - 1,
-                    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`
-                 }})
-            }, 1500);
+            ifNotViewed()
         }
         if(inView) {
             setSelected(isSelected())
@@ -68,7 +81,7 @@ const PokemonCard = ({
 
     return (
         <div ref={ref} className={`pokemonCard ${!image? 'animate-pulse' : 'cursor-pointer'}`} style={{
-            backgroundColor: data.vibrant 
+            backgroundColor: `rgb(${backgroundCol?.[0]}, ${backgroundCol?.[1]}, ${backgroundCol?.[2]})`
         }} >
             {image ? <img src={image} alt={name} id="pokeImage" className='imageCard' /> : (
                 <div className="imageEmpty">
