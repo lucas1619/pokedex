@@ -1,36 +1,70 @@
 import './styles/index.css';
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 interface Props {
     name : string;
     number : number;
+    originalImage : string | null | undefined;
 }
 
 const PokemonCard = ({
     name,
     number,
+    originalImage
 } : Props) => {
-
-    const [image, setImage] = useState<string | undefined | null>("");
+    const [image, setImage] = useState<string | undefined | null>(originalImage);
+    const dispatch = useDispatch();
+    const selectedPokemons = useSelector((state: any) => state.pokemon.selectedPokemons);
 
     const { ref, inView } = useInView({
         triggerOnce: true,
     });
 
+    const isSelected = () => {
+        return selectedPokemons.find((pokemon : any) => pokemon.number === number) !== undefined;
+    }
+
+    const [selected, setSelected] = useState<boolean>(isSelected());
+
+    const handleOnClickButton = (e : any) => {
+        e.stopPropagation()
+        e.preventDefault()
+        const selected = isSelected()
+        if (image && !selected) {
+            dispatch({type: "ADD_TO_SELECTED_POKEMONS", payload:{
+                name: name,
+                number: number,
+                image: image
+            }})
+        }
+        else if(image && selected){
+            dispatch({type: "REMOVE_FROM_SELECTED_POKEMONS", payload:{
+                number: number,
+            }})
+        }
+        setSelected(!selected)
+    }
+
     useEffect(() => {
-        if (inView) {
+        if (inView && !image) {
             setTimeout(() => {
                 setImage(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`)
+                dispatch({ type: "SET_POKEMON_IMAGE", payload: { 
+                    index: number - 1,
+                    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`
+                 }})
             }, 1500);
         }
-    }, [inView]);
+        if(inView) {
+            setSelected(isSelected())
+        }
+    }, [inView, selectedPokemons]);
 
     return (
-        <div ref={ref} className={`pokemonCard ${!image? 'animate-pulse' : ''}`} onClick={() => {
-            alert('bbb')
-        }}>
+        <div ref={ref} className={`pokemonCard ${!image? 'animate-pulse' : 'cursor-pointer'}`}>
             {image ? <img src={image} alt={name} /> : (
                 <div className="imageEmpty">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
@@ -39,14 +73,19 @@ const PokemonCard = ({
                 </div>
             )}
             <h2>{name}</h2>
-            <button className='buttonPlus' onClick={(e) => {
-                e.stopPropagation()
-                alert('aaa')
-            }}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-            </button>
+            {selected ? (
+                <button className='buttonMinus z-50' onClick={handleOnClickButton}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                    </svg>
+                </button>
+            ) :
+                <button className='buttonPlus z-50' onClick={handleOnClickButton}>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                </button>
+            }
         </div>
     );
 }

@@ -21,7 +21,6 @@ export class PokemonAdapter {
     }
 
     public static axiosToPokemons(axiosPokemons : any) : Pokemon[] {
-        debugger
         return axiosPokemons.data.results.map((axiosPokemon : any, index : number) => {
             return {
                 name: axiosPokemon.name,

@@ -13,11 +13,17 @@
 }
 
 .pokemonCard:hover {
-    transform: scale(1.15);
+    transform: scale(1.05);
 }
 
 .buttonPlus {
     @apply w-6 h-6 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm text-center absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.buttonMinus {
+    @apply w-6 h-6 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm text-center absolute;
     top: 5px;
     right: 5px;
 }

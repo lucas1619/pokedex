@@ -7,20 +7,19 @@ import {
 import { Main, Detail } from '@/pages';
 
 import '@/styles/app.css';
+import { SelectedPokemons } from "@/components";
 
 const App = () => {
     return (
         <main className="main">
             <BrowserRouter>
                 <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/detail/:id" element={<Detail />} />
-                <Route path="/*" element={<div>404 not found</div>} />
+                    <Route path="/" element={<Main />} />
+                    <Route path="/detail/:id" element={<Detail />} />
+                    <Route path="/*" element={<div>404 not found</div>} />
                 </Routes>
+                <SelectedPokemons/>
             </BrowserRouter>
-            <section>
-                <h1>Bookkeeper!</h1>
-            </section>
         </main>
     )
 
